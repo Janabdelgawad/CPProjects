@@ -79,3 +79,21 @@ int main() {
 	showMenu();
 	return 0;
 }
+/*3. File Handling Efficiency
+Every login attempt opens and closes the file. Can you optimize this process?
+
+What happens if the file is large? Does logUser() become inefficient?
+
+4. Error Handling
+What happens if users.txt doesn’t exist yet?
+
+What if the file gets corrupted?
+
+How does your code behave when given unexpected inputs (e.g., spaces in usernames)?
+
+5. Edge Cases
+What happens if a user enters an empty username or password?
+
+Can two users register with the same username? If so, is that intended?
+
+What happens if the file contains incorrectly formatted data?*/
