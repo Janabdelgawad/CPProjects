@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <functional>
+#include <unordered_map>
 std::string hashPassword(const std::string& password) {
 	std::hash<std::string> hasher;
 	return std::to_string(hasher(password));
@@ -33,21 +34,29 @@ void registerUser() {
 
 bool logUser(const std::string& username, const std::string& password) {
 	std::ifstream file("user.txt");
-	std::string storedUsername, storedHashedPassword;
-
 	if (!file.is_open()) {
 		std::cout << "Error: Could not open file.\n";
 		return false;
 	}
-	std::string hashedPassword{ hashPassword(password) }; //hash entered password
-	while (file >> storedUsername >> storedHashedPassword) {
-		if (storedUsername == username && storedHashedPassword == hashedPassword) {
-			file.close();
-			return true;
-		}
 
+
+	std::unordered_map<std::string ,std::string> storedData;
+	std::string line, storedUsername, storedHashedPassword;
+	std::string hashedPassword{ hashPassword(password) }; //hash entered password
+
+	//read file and store data in the map
+	while (std::getline(file, line)) {
+		size_t separator{ line.find(' ') };
+		if (separator != std::string::npos) {
+			storedUsername = line.substr(0, separator);
+			storedHashedPassword = line.substr(separator + 1);
+			storedData[storedUsername] = storedHashedPassword;
+		}
 	}
 	file.close();
+
+	if (storedData.find(username) != storedData.end() && storedData[username] == hashedPassword) { return true; }
+
 	return false;
 }
 
@@ -79,13 +88,9 @@ int main() {
 	showMenu();
 	return 0;
 }
-/*3. File Handling Efficiency
-Every login attempt opens and closes the file. Can you optimize this process?
-
-What happens if the file is large? Does logUser() become inefficient?
-
+/*
 4. Error Handling
-What happens if users.txt doesn’t exist yet?
+What happens if users.txt doesnâ€™t exist yet?
 
 What if the file gets corrupted?
 
