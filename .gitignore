@@ -1,0 +1,8 @@
+.vs/ 
+*.suo
+*.user
+*.cache
+*.pdb
+*.obj
+*.exe
+*.log
