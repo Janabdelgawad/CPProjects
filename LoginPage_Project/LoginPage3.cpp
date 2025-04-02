@@ -10,7 +10,7 @@ std::string hashPassword(const std::string& password) {
 std::string getInput(const std::string& prompt) {
 	std::cout << prompt;
 	std::string input;
-	std::cin >> input;
+	std::getline(std::cin, input);
 	return input;
 }
 
@@ -36,11 +36,18 @@ bool logUser(const std::string& username, const std::string& password) {
 	std::string storedUsername, storedHashedPassword;
 
 	if (!file.is_open()) {
-		std::cout << "Error: Could not open file.\n";
+		std::ofstream createFile("user.txt");
+		createFile.close();
 		return false;
 	}
+	std::cout << "Read from file: [" << storedUsername << "] [" << storedHashedPassword << "]\n";  // Debugging line
+
 	std::string hashedPassword{ hashPassword(password) }; //hash entered password
 	while (file >> storedUsername >> storedHashedPassword) {
+		if (storedUsername.empty() || storedHashedPassword.empty()) { 
+			std::cout << "Error: Corrupted entry found, skipping...\n"; 
+			continue;
+		}
 		if (storedUsername == username && storedHashedPassword == hashedPassword) {
 			file.close();
 			return true;
@@ -79,14 +86,7 @@ int main() {
 	showMenu();
 	return 0;
 }
-/*3. File Handling Efficiency
-Every login attempt opens and closes the file. Can you optimize this process?
-
-What happens if the file is large? Does logUser() become inefficient?
-
-4. Error Handling
-What happens if users.txt doesn’t exist yet?
-
+/*3. 
 What if the file gets corrupted?
 
 How does your code behave when given unexpected inputs (e.g., spaces in usernames)?
