@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <functional>
+#include <unordered_map>
 std::string hashPassword(const std::string& password) {
 	std::hash<std::string> hasher;
 	return std::to_string(hasher(password));
@@ -33,13 +34,12 @@ void registerUser() {
 
 bool logUser(const std::string& username, const std::string& password) {
 	std::ifstream file("user.txt");
-	std::string storedUsername, storedHashedPassword;
-
 	if (!file.is_open()) {
 		std::ofstream createFile("user.txt");
 		createFile.close();
 		return false;
 	}
+<<<<<<< HEAD
 	std::cout << "Read from file: [" << storedUsername << "] [" << storedHashedPassword << "]\n";  // Debugging line
 
 	std::string hashedPassword{ hashPassword(password) }; //hash entered password
@@ -52,9 +52,27 @@ bool logUser(const std::string& username, const std::string& password) {
 			file.close();
 			return true;
 		}
+=======
+>>>>>>> 04c545b8523f897c5c925288ecc36316605616c4
 
+
+	std::unordered_map<std::string ,std::string> storedData;
+	std::string line, storedUsername, storedHashedPassword;
+	std::string hashedPassword{ hashPassword(password) }; //hash entered password
+
+	//read file and store data in the map
+	while (std::getline(file, line)) {
+		size_t separator{ line.find(' ') };
+		if (separator != std::string::npos) {
+			storedUsername = line.substr(0, separator);
+			storedHashedPassword = line.substr(separator + 1);
+			storedData[storedUsername] = storedHashedPassword;
+		}
 	}
 	file.close();
+
+	if (storedData.find(username) != storedData.end() && storedData[username] == hashedPassword) { return true; }
+
 	return false;
 }
 
@@ -86,7 +104,14 @@ int main() {
 	showMenu();
 	return 0;
 }
+<<<<<<< HEAD
 /*3. 
+=======
+/*
+4. Error Handling
+What happens if users.txt doesn’t exist yet?
+
+>>>>>>> 04c545b8523f897c5c925288ecc36316605616c4
 What if the file gets corrupted?
 
 How does your code behave when given unexpected inputs (e.g., spaces in usernames)?
