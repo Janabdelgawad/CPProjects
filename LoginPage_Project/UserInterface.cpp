@@ -32,7 +32,6 @@ void UserInterface::showMainMenu() {
 	}
 }
 
-//userexists func errors
 void UserInterface::handleRegisteration() {
 	std::string username, password;
 	bool registerationSuccessful = false;
@@ -40,7 +39,7 @@ void UserInterface::handleRegisteration() {
 	do {
 		username = getInput("Enter Username: ");
 		if (!authManager.isUsernameValid(username)) {
-			displayMessage("Username must be at least 3 characters and contain only letters, numbers, and underscores.");
+			displayMessage("Username must be at least 8 characters and contain only letters, numbers, and underscores.");
 			continue;
 		}
 		if (authManager.userExists(username)) {

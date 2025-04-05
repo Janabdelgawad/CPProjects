@@ -1,10 +1,8 @@
-﻿#include <iostream>
-#include "FileStorage.h"
-#include "User.h"
-#include <functional>
+﻿#include "UserInterface.h"
 
 int main() {
-
+	UserInterface ui("user.txt");
+	ui.showMainMenu();
 	return 0;
 }
 
