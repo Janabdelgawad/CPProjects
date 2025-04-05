@@ -1,6 +1,6 @@
 #pragma once
 #include "User.h"
-#include "fileStorage.h"
+#include "FileStorage.h"
 
 class AuthenticationManager {
 private:
@@ -18,6 +18,7 @@ public:
 	//validation methods
 	bool isUsernameValid(const std::string& username) const;
 	bool isPasswordValid(const std::string& password) const;
+	bool userExists(const std::string& username) const;
 
 	//getter method
 	//bool isUserLoggedin(); USE IT IN THE UI TO DISPLAY CHANGES and PREVENT UNAUTHORIZED ACTION (ONLY LOGGED IN USERS CAN DO STH)

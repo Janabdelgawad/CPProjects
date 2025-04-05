@@ -25,6 +25,10 @@ bool AuthenticationManager::isPasswordValid(const std::string& password) const {
 	return std::regex_match(password, passwordPattern);
 }
 
+bool AuthenticationManager::userExists(const std::string& username) const {
+	return fileStorage.userExists(username);
+}
+
 //registeration and login methods implementation
 bool AuthenticationManager::registerUser(const std::string& username, const std::string& password) {
 	if (!isUsernameValid(username)) {

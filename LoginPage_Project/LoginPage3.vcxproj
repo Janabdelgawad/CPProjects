@@ -127,10 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AuthenticationManager.cpp" />
+    <ClCompile Include="FileStorage.cpp" />
     <ClCompile Include="LoginPage3.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="user.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AuthenticationManager.h" />
+    <ClInclude Include="FileStorage.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
